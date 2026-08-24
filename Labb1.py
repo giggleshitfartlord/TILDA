@@ -29,17 +29,16 @@ class Drama():
         print(f"Dramat {self.name} har {self.no_of_episodes} avsnitt")
 
     def info_om_dramat(self):
-        print(f"Dramat heter {self.name} och är en {self.genre}serie. Den har en rating på {self.rating} och har setts {self.viewship}.\n Skådespelarna i filmen är {self.actors}, är producerad av {self.director} och skriven av {self.writer}.\n Den släpptes år {self.year} och gavs ut av {self.network}. Den har {self.no_of_episodes} avsnitt idag.")
+        print(f"Dramat heter {self.name} och är en {self.genre}serie. Den har en rating på {self.rating} och ett viewship value på {self.viewship}.\n Skådespelarna i filmen är {self.actors}, är producerad av {self.director} och skriven av {self.writer}.\n Den släpptes år {self.year} och gavs ut av {self.network}. Den har {self.no_of_episodes} avsnitt idag.")
 
 def read_file(filename):
     drama_list = []
     with open (filename, mode = "r") as drama_file:
-        csvfile = csv.reader(drama_file, delimiter= "\t" )
+        csvfile = csv.reader(drama_file)
         next(csvfile)
         for line in csvfile:
-            drama = line[0]
-            drama = drama.split(",")
-            drama_name = Drama(drama[0], drama[1], drama[2], drama[3], drama[4], drama[5], drama[6], drama[7], drama[8], drama[9])
+            drama_name = line[0]
+            drama_name = Drama(line[0], line[1], line[2], line[3], line[4], line[5], line[6], line[7], line[8], line[9])
             drama_list.append(drama_name)
             
         return drama_list
@@ -56,5 +55,7 @@ def search_drama_list(list):
 if __name__ == "__main__":
     list = read_file("kdrama.csv")
     for i in list:
-        print(i.info_om_dramat())
+        i.info_om_dramat()
+
+    search_drama_list(list)
 
